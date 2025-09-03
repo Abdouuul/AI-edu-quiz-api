@@ -1,0 +1,68 @@
+classDiagram
+  %% --- Users ---
+  class user {
+    +id: int
+    +first_name: String
+    +last_name: String
+    +email: String
+    +password: String
+    +signupDate: Date
+    +created_at: Date
+    +updated_at: Date
+    +is_teacher: Boolean
+    +lessons: List<Lesson>
+    +quizzes: List<Quiz>
+  }
+
+  %% --- Lesson ---
+  class Lesson {
+    +id: int
+    +title: String
+    +content: Text
+    +teacher: Teacher
+    +quiz: Quiz
+    +created_at: Date
+    +updated_at: Date
+  }
+
+  %% --- Quiz ---
+  class Quiz {
+    +id: int
+    +title: String
+    +lesson: Lesson
+    +questions: List<Question>
+    +created_at: Date
+    +updated_at: Date
+  }
+
+  class Question {
+    +id: int
+    +enonce: String
+    +type: String
+    +explication: String
+  }
+
+  class QuestionTypes{
+    +id: int
+    +name: String
+  }
+
+  %% --- AI Service ---
+  class IAService {
+    +generateQuiz(contenu: String): Quiz
+    +changeModel(model: String)
+    +generationTime < 5s
+  }
+
+  class History {
+    +id: int
+    +action: string
+    +created_at: Date
+  } 
+
+  %% --- Relations ---
+  user "1" --> "*" Lesson : has
+  user "1" --> "*" Quiz : generates
+  Lesson "1" --> "*" Quiz : based of
+  Quiz "1" --> "*" Question : contains
+  Quiz --> IAService : uses
