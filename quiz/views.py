@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from rest_framework.viewsets import ViewSet
+from rest_framework.permissions import IsAuthenticated
+from .models import Quiz, Question
 
-# Create your views here.
+class QuizView(ViewSet):
+    permission_classes = [IsAuthenticated]
+    query_set = Quiz.objects.all()
