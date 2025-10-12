@@ -14,4 +14,4 @@ Générateur intelligent de quiz pédagogiques
 
 - Gérer, éditer et exporter les quiz (PDF, CSV, JSON).
 
-- Sauvegarder ses cours et quiz dans un espace personnel.
+- Sauvegarder ses cours et quiz dans un espace personnel.i just saw a tweet saying bf6 portal is up 
