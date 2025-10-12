@@ -13,6 +13,8 @@ class GeneratedQuestion(BaseModel):
     enonce: str
     explications: Optional[str] = ""
     choices: Dict[str, bool] 
+    question_type: str = ""
+    open_question_answer: str = ""
 
 class GeneratedQuiz(BaseModel):
     questions: List[GeneratedQuestion]
@@ -48,20 +50,22 @@ Lesson content:
 Return a JSON array where each element is an object with the following fields:
 
 - enonce: the text of the question
-- explications: explanation of the answer (can be empty)
-- choices: a dictionary of answer options, with True for the correct answer and False for incorrect ones
+- explications : explanation of the answer (can be empty)
+- question_type :  Can only be the following values ["SC", "MC", "TF", "OE"] which stands for Single Choice, Multiple Choice, True/False, Open Ended
+- choices: a dictionary of answer options, with True for the correct answer and False for incorrect ones or no choices if question_type is Open Ended
+- open_question_answer : this contains the answer for a question of open ended type "OE"
 
 Return only the JSON array — no extra text, no markdown.
 """)
 
 
 
-def generate_quiz(state: GeneratorState) -> GeneratorState:
+def generate_quiz_questions(state: GeneratorState) -> GeneratorState:
     structured_llm = llm.with_structured_output(GeneratedQuiz)
     chain = generate_quiz_prompt | structured_llm
     result: GeneratedQuiz = chain.invoke({
         "lesson": state.lesson.content,
-        "amount": 10
+        "amount": 15
     })
 
     list_questions = []
@@ -83,7 +87,7 @@ def respond_to_user(state: GeneratorState) -> GeneratorState:
 graph = StateGraph(GeneratorState)
 
 graph.add_node("fetch_lesson", fetch_lesson)
-graph.add_node("generate_quiz", generate_quiz)
+graph.add_node("generate_quiz", generate_quiz_questions)
 graph.add_node("response_to_user", respond_to_user)
 
 
