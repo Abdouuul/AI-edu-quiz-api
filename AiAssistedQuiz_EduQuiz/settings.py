@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'api',
     'authenticator',
     'lesson',
-    'quiz'
+    'quiz',
+    'ai_generator'
 ]
 
 MIDDLEWARE = [

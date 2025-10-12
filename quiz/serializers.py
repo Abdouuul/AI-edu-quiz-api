@@ -4,4 +4,4 @@ from .models import Quiz, Question
 class QuizSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Quiz 
-        fields = ['enonce']
+        fields = ['title', 'questions', 'lesson']
