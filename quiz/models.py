@@ -4,7 +4,6 @@ from lesson.models import Lesson
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="quizzes")
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
